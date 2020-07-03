@@ -43,9 +43,9 @@ public class AzurLaneRoll extends SuperPlugin {
     boolean isExpired = false;
     String helpInfo = "碧蓝航线建造模拟器插件\n格式:\n  /al [Source]\n其中:\n" +
             "  /al 插件名, 等价于/azurlane\n  [Source] 池子, 有以下选项:\n" +
-            "    L: 轻型池\n    H: 重型池\n    S: 特型池\n    T: 限时建造\n" +
+            "    L: 轻型池\n    H: 重型池\n    S: 特型池\n    T: 限时建造(还没写完呢)\n" +
             "需要注意的是, 限时建造不一定在此刻可用. 这时的限时建造将按照上一次的概率进行, 并会给出提示\n" +
-            "祝欧🍻" +
+            "祝欧🍻\n" +
             "[限时建造还没写完...]";
 
     public AzurLaneRoll() {
@@ -67,10 +67,8 @@ public class AzurLaneRoll extends SuperPlugin {
                 if(parsed[1].equals("SSR"))
                     light_ssr.add(new Ships(parsed[0], parsed[1]));
                 line = bufferedReader.readLine();
-
             }
-            System.out.println(light_ssr.size());
-            System.out.println(light_n.size());
+            bufferedReader.close();
 
             /*
             line = bufferedReader.readLine();
@@ -84,6 +82,7 @@ public class AzurLaneRoll extends SuperPlugin {
 
             fileInputStream = new FileInputStream("data/ship_list/heavy.txt");
             bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+            line = bufferedReader.readLine();
             while(line != null) {
                 parsed = line.split(" ");
                 if(parsed[1].equals("N"))
@@ -99,6 +98,7 @@ public class AzurLaneRoll extends SuperPlugin {
 
             fileInputStream = new FileInputStream("data/ship_list/sp.txt");
             bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+            line = bufferedReader.readLine();
             while(line != null) {
                 parsed = line.split(" ");
                 if(parsed[1].equals("N"))
@@ -113,6 +113,12 @@ public class AzurLaneRoll extends SuperPlugin {
             }
 
             bufferedReader.close();
+            System.out.println(light_ssr.size());
+            System.out.println(light_n.size());
+            System.out.println(heavy_ssr.size());
+            System.out.println(heavy_n.size());
+            System.out.println(sp_ssr.size());
+            System.out.println(sp_n.size());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -153,18 +159,37 @@ public class AzurLaneRoll extends SuperPlugin {
                 if(rand < 7) {
                     result = light_ssr.get(rng.nextInt(light_ssr.size()));
                 } else if(rand < (7 + 12)) {
-                    result = light_sr.get(rng.nextInt(light_ssr.size()));
+                    result = light_sr.get(rng.nextInt(light_sr.size()));
                 } else if(rand < (7 + 12 + 26)) {
-                    result = light_r.get(rng.nextInt(light_ssr.size()));
+                    result = light_r.get(rng.nextInt(light_r.size()));
                 } else {
-                    result = light_n.get(rng.nextInt(light_ssr.size()));
+                    result = light_n.get(rng.nextInt(light_n.size()));
                 }
                 break;
             case "H":
+                if(rand < 7) {
+                    result = heavy_ssr.get(rng.nextInt(heavy_ssr.size()));
+                } else if(rand < (7 + 12)) {
+                    result = heavy_sr.get(rng.nextInt(heavy_sr.size()));
+                } else if(rand < (7 + 12 + 51)) {
+                    result = heavy_r.get(rng.nextInt(heavy_r.size()));
+                } else {
+                    result = heavy_n.get(rng.nextInt(heavy_n.size()));
+                }
                 break;
             case "S":
+                if(rand < 7) {
+                    result = sp_ssr.get(rng.nextInt(sp_ssr.size()));
+                } else if(rand < (7 + 12)) {
+                    result = sp_sr.get(rng.nextInt(sp_sr.size()));
+                } else if(rand < (7 + 12 + 51)) {
+                    result = sp_r.get(rng.nextInt(sp_r.size()));
+                } else {
+                    result = sp_n.get(rng.nextInt(sp_n.size()));
+                }
                 break;
             case "T":
+                returnMsg.append("当前还没写限时建造的部分(另外限时建造不是刚过去一波吗...)");
                 break;
             default:
                 returnMsg.append(helpInfo);
