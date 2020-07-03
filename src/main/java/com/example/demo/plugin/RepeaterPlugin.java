@@ -33,9 +33,11 @@ public class RepeaterPlugin extends SuperPlugin
         if(!is_enabled)
             return MESSAGE_IGNORE;
         String msg = event.getMessage();
+        if(msg.charAt(0) == '/')
+            return MESSAGE_IGNORE;
         long groupId = event.getGroupId();
         long userId = event.getUserId();
-        if(!map.containsKey(groupId))
+        if((!map.containsKey(groupId)))
         {
             map.put(groupId, new RepeatInfo(msg, false));
             return MESSAGE_IGNORE;
