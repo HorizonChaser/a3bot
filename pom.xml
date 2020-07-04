@@ -46,6 +46,12 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>biz.k11i</groupId>
+            <artifactId>fast-rng</artifactId>
+            <version>0.2.0</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.json/json -->
         <dependency>
             <groupId>org.json</groupId>
@@ -80,6 +86,12 @@
                 <updatePolicy>never</updatePolicy>
             </snapshots>
         </repository>
+
+        <repository>
+            <id>bintray-komiya-atsushi-maven</id>
+            <url>http://dl.bintray.com/komiya-atsushi/maven</url>
+        </repository>
+
     </repositories>
     <pluginRepositories>
         <pluginRepository>

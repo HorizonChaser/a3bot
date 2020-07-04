@@ -49,7 +49,7 @@ public class HitokotoPlugin extends SuperPlugin
                 httpURLConnection.connect();
 
                 JSONObject jsonObject = new JSONObject(new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(),"UTF-8")).readLine());
-                String hitokoto_msg = jsonObject.getString("hitokoto")+"\n————"+jsonObject.getString("from");
+                String hitokoto_msg = jsonObject.getString("hitokoto")+"\n———— "+jsonObject.getString("from");
 
                 cq.sendGroupMsg(groupId,hitokoto_msg,false);
 

@@ -12,12 +12,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
 public class PluginSystemPlugin extends CQPlugin
 {
-    long admin = 1543127579L;
+    long admin = 1783861062L;
     List permission_list = new ArrayList<Long>();
     File file = null;
     FileInputStream fileInputStream = null;
@@ -65,6 +66,11 @@ public class PluginSystemPlugin extends CQPlugin
     @Override
     public int onGroupMessage(CoolQ cq, CQGroupMessageEvent event)
     {
+        Date curr = new Date();
+        if(curr.getTime() - SuperPlugin.lastActiveTime.getTime() <= 3000)
+            return MESSAGE_BLOCK;
+        else
+            SuperPlugin.lastActiveTime = curr;
         long userId = event.getUserId();
         long groupId = event.getGroupId();
         String msg = event.getMessage();

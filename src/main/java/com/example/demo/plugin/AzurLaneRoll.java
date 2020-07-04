@@ -1,9 +1,11 @@
 package com.example.demo.plugin;
 
 import a3lib.SuperPlugin;
+import biz.k11i.rng.GaussianRNG;
 import net.lz1998.cq.event.message.CQGroupMessageEvent;
 import net.lz1998.cq.event.message.CQPrivateMessageEvent;
 import net.lz1998.cq.robot.CoolQ;
+import net.lz1998.cq.utils.CQCode;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -41,9 +43,10 @@ public class AzurLaneRoll extends SuperPlugin {
     List<Ships> sp_ssr = new ArrayList<>();
     List<Ships> timeLimited = new ArrayList<>();
     boolean isExpired = false;
-    String helpInfo = "碧蓝航线建造模拟器插件\n格式:\n  /al [Source]\n其中:\n" +
-            "  /al 插件名, 等价于/azurlane\n  [Source] 池子, 有以下选项:\n" +
+    String helpInfo = "碧蓝航线建造模拟器插件\n格式:\n  /al <Source> [Amount]\n其中:\n" +
+            "  /al 插件名, 等价于/azurlane\n  <Source> 池子, 有以下选项:\n" +
             "    L: 轻型池\n    H: 重型池\n    S: 特型池\n    T: 限时建造(还没写完呢)\n" +
+            "  [Amount] 连抽次数, 可不填(即为单抽)\n" +
             "需要注意的是, 限时建造不一定在此刻可用. 这时的限时建造将按照上一次的概率进行, 并会给出提示\n" +
             "祝欧🍻\n" +
             "[限时建造还没写完...]";
@@ -95,6 +98,7 @@ public class AzurLaneRoll extends SuperPlugin {
                     heavy_ssr.add(new Ships(parsed[0], parsed[1]));
                 line = bufferedReader.readLine();
             }
+            bufferedReader.close();
 
             fileInputStream = new FileInputStream("data/ship_list/sp.txt");
             bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
@@ -111,14 +115,7 @@ public class AzurLaneRoll extends SuperPlugin {
                     sp_ssr.add(new Ships(parsed[0], parsed[1]));
                 line = bufferedReader.readLine();
             }
-
             bufferedReader.close();
-            System.out.println(light_ssr.size());
-            System.out.println(light_n.size());
-            System.out.println(heavy_ssr.size());
-            System.out.println(heavy_n.size());
-            System.out.println(sp_ssr.size());
-            System.out.println(sp_n.size());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -150,10 +147,114 @@ public class AzurLaneRoll extends SuperPlugin {
         }
 
         Random rng = new Random();
-        double rand = rng.nextInt(100);
+        int rand = (int) (GaussianRNG.FAST_RNG.generate(rng)*100);
         Ships result = null;
+        Map<String, Integer> multiRes = new HashMap<>();
+        int n = 0, r = 0, sr = 0, ssr = 0;
         StringBuilder returnMsg = new StringBuilder();
-        returnMsg.append("@").append(event.getSender().getUserId()).append(" ");
+        returnMsg.append(CQCode.at(event.getUserId())).append(" ");
+        if(msgs.length > 2) {
+            int rolls = 0;
+            try {
+                rolls = Integer.parseInt(msgs[2]);
+            }catch (NumberFormatException e) {
+                e.printStackTrace();
+                returnMsg.append("\n第三个参数无效, 将被忽视\n");
+            }
+            returnMsg.append("\n").append(rolls).append("次建船结果如下\n");
+            switch (msgs[1]) {
+                case "L":
+                    for(int i = 0;i < rolls;i++) {
+                        if(rand < 7) {
+                            result = (light_ssr.get(rng.nextInt(light_ssr.size())));
+                            ssr++;
+                        } else if(rand < (7 + 12)) {
+                            result = (light_sr.get(rng.nextInt(light_sr.size())));
+                            sr++;
+                        } else if(rand < (7 + 12 + 26)) {
+                            result = (light_r.get(rng.nextInt(light_r.size())));
+                            r++;
+                        } else {
+                            result = (light_n.get(rng.nextInt(light_n.size())));
+                            n++;
+                        }
+                        rand = rng.nextInt(100);
+                        if(multiRes.containsKey(result.name)) {
+                            Integer val = multiRes.get(result.name);
+                            val += 1;
+                            multiRes.put(result.name, val);
+                        } else {
+                            multiRes.put(result.name, 1);
+                        }
+                    }
+                    break;
+                case "H":
+                    for(int i = 0;i < rolls;i++) {
+                        if(rand < 7) {
+                            result = (heavy_ssr.get(rng.nextInt(heavy_ssr.size())));
+                            ssr++;
+                        } else if(rand < (7 + 12)) {
+                            result = (heavy_sr.get(rng.nextInt(heavy_r.size())));
+                            sr++;
+                        } else if(rand < (7 + 12 + 26)) {
+                            result = (heavy_r.get(rng.nextInt(heavy_r.size())));
+                            r++;
+                        } else {
+                            result = (heavy_n.get(rng.nextInt(heavy_n.size())));
+                            n++;
+                        }
+                        rand = (int) (GaussianRNG.FAST_RNG.generate(rng)*100);
+                        Integer val = 0;
+                        if(multiRes.containsKey(result.name)) {
+                            val = multiRes.get(result.name);
+                            val += 1;
+                            multiRes.put(result.name, val);
+                        } else {
+                            multiRes.put(result.name, 1);
+                        }
+                    }
+                    break;
+                case "S":
+                    for(int i = 0;i < rolls;i++) {
+                        if(rand < 7) {
+                            result = (sp_ssr.get(rng.nextInt(sp_ssr.size())));
+                            ssr++;
+                        } else if(rand < (7 + 12)) {
+                            result = (sp_sr.get(rng.nextInt(sp_sr.size())));
+                            sr++;
+                        } else if(rand < (7 + 12 + 26)) {
+                            result = (sp_r.get(rng.nextInt(sp_r.size())));
+                            r++;
+                        } else {
+                            result = (sp_n.get(rng.nextInt(sp_n.size())));
+                            n++;
+                        }
+                        rand = rng.nextInt(100);
+                        if(multiRes.containsKey(result.name)) {
+                            Integer val = multiRes.get(result.name);
+                            val += 1;
+                            multiRes.put(result.name, val);
+                        } else {
+                            multiRes.put(result.name, 1);
+                        }
+                    }
+                    break;
+                case  "T":
+                    //TODO
+                    break;
+                default:
+                    break;
+            }
+
+            for(String currName : multiRes.keySet()) {
+                returnMsg.append(currName).append("  ").append(multiRes.get(currName)).append("次\n");
+            }
+            returnMsg.append("-----------\nSSR总计 ").append(ssr).append("\nSR总计 ")
+                    .append(sr).append("\nR总计 ").append(r).append("\nN总计 ").append(n);
+            returnMsg.append("\n祝欧🍻");
+            cq.sendGroupMsg(event.getGroupId(), returnMsg.toString(), false);
+            return MESSAGE_BLOCK;
+        }
         switch (msgs[1]) {
             case "L":
                 if(rand < 7) {

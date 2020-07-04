@@ -6,8 +6,7 @@ import net.lz1998.cq.event.message.CQPrivateMessageEvent;
 import net.lz1998.cq.robot.CoolQ;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class RepeaterPlugin extends SuperPlugin
