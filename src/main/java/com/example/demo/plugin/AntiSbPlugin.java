@@ -20,7 +20,7 @@ public class AntiSbPlugin extends SuperPlugin
 {
     String request_url = "https://nmsl.shadiao.app/api.php?level=";
     long level = 114514;
-    long admin = 1543127579L;
+    long admin = 1783861062L;
     List sb_list = new ArrayList<Long>();
     File file = null;
     FileInputStream fileInputStream = null;
@@ -84,7 +84,7 @@ public class AntiSbPlugin extends SuperPlugin
         {
             try
             {
-                URL url = new URL(request_url+String.valueOf(level));
+                URL url = new URL(request_url+ level);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setRequestMethod("GET");

@@ -430,7 +430,7 @@ public class LegendsOfThreeKingdomPlugin extends SuperPlugin
             }
             if(args[1].equals("stop"))
             {
-                if(userId!=1543127579L)
+                if(userId!=1783861062L)
                 {
                     cq.sendGroupMsg(groupId,"Permission denied, authorization limited.",false);
                     return MESSAGE_BLOCK;
@@ -445,7 +445,7 @@ public class LegendsOfThreeKingdomPlugin extends SuperPlugin
             }
             if (args[1].equals("next"))
             {
-                if(userId!=1543127579L)
+                if(userId!=1783861062L)
                 {
                     cq.sendGroupMsg(groupId,"Permission denied, authorization limited.",false);
                     return MESSAGE_BLOCK;

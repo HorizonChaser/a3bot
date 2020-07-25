@@ -20,7 +20,7 @@ public class FlattererPlugin extends SuperPlugin
 {
     String request_url = "https://chp.shadiao.app/api.php?level=";
     long level = 114514;
-    long admin = 1543127579L;
+    long admin = 1783861062L;
     List gods_list = new ArrayList<Long>();
     File file = null;
     FileInputStream fileInputStream = null;

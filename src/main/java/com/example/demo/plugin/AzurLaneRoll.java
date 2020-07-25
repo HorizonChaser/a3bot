@@ -161,7 +161,7 @@ public class AzurLaneRoll extends SuperPlugin {
                 e.printStackTrace();
                 returnMsg.append("\n第三个参数无效, 将被忽视\n");
             }
-            returnMsg.append("\n").append(rolls).append("次建船结果如下\n");
+            returnMsg.append("\n").append(rolls).append("次建造结果如下\n");
             switch (msgs[1]) {
                 case "L":
                     for(int i = 0;i < rolls;i++) {

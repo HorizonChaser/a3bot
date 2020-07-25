@@ -63,7 +63,7 @@ public class TeachMsgPlugin extends SuperPlugin
         if(msg.equals("/teach save"))
         {
             long userId = event.getUserId();
-            if(userId != 1543127579L)
+            if(userId != 1783861062L)
             {
                 cq.sendGroupMsg(group_id,"Permission denied, authorization limited.",false);
                 return MESSAGE_BLOCK;
@@ -89,7 +89,7 @@ public class TeachMsgPlugin extends SuperPlugin
         if(msg.equals("/teach load"))
         {
             long userId = event.getUserId();
-            if(userId != 1543127579L)
+            if(userId != 1783861062L)
             {
                 cq.sendGroupMsg(group_id,"Permission denied, authorization limited.",false);
                 return MESSAGE_BLOCK;
@@ -189,7 +189,7 @@ public class TeachMsgPlugin extends SuperPlugin
         }
         if(msg.equals("/teach save"))
         {
-            if(userId != 1543127579L)
+            if(userId != 1783861062L)
             {
                 cq.sendGroupMsg(userId,"Permission denied, authorization limited.",false);
                 return MESSAGE_BLOCK;
@@ -214,7 +214,7 @@ public class TeachMsgPlugin extends SuperPlugin
         }
         if(msg.equals("/teach load"))
         {
-            if(userId != 1543127579L)
+            if(userId != 1783861062L)
             {
                 cq.sendPrivateMsg(userId,"Permission denied, authorization limited.",false);
                 return MESSAGE_BLOCK;

@@ -18,7 +18,7 @@ public class KillMotherPlugin extends SuperPlugin
 {
     String request_url = "https://nmsl.shadiao.app/api.php?level=";
     long level = 114514;
-    long admin = 1543127579L;
+    long admin = 1783861062L;
     List permission_list = new ArrayList<Long>();
     File file = null;
     FileInputStream fileInputStream = null;
