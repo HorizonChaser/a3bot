@@ -34,18 +34,18 @@ public class JiangNanRoll extends SuperPlugin {
     }
 
     enum Category {
-        天, 侯, 卿, 物I, 物II;
+        tian, hou, qing, wuI, wuII;
 
         static double getPercentage(Category category) {
-            if (category == 天)
+            if (category == tian)
                 return 0.003;
-            if (category == 侯)
+            if (category == hou)
                 return 0.017;
-            if (category == 卿)
+            if (category == qing)
                 return 0.07;
-            if (category == 物I)
+            if (category == wuI)
                 return 0.003;
-            if (category == 物II)
+            if (category == wuII)
                 return 0.005;
             return -1.0;
         }
@@ -147,7 +147,7 @@ public class JiangNanRoll extends SuperPlugin {
             rolls = Integer.parseInt(msgs[1]);
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            returnMsg.append("\nAmount参数无效(应为正整数, 但你输入的是").append(msgs[1]).append(")\n");
+            returnMsg.append("\nAmount参数无效(应为正整数, 但你输入的是").append(msgs[1]).append(")");
             cq.sendGroupMsg(event.getGroupId(), returnMsg.toString(), false);
             return MESSAGE_BLOCK;
         }
@@ -160,17 +160,17 @@ public class JiangNanRoll extends SuperPlugin {
             cq.sendGroupMsg(event.getGroupId(), returnMsg.toString(), false);
             returnMsg = new StringBuilder();
             switch (currPerson.category) {
-                case 卿:
+                case qing:
                     returnMsg.append("Better Luck Next Time😂");
                     break;
-                case 侯:
+                case hou:
                     returnMsg.append("手气不错(赞赏)");
                     break;
-                case 物I:
-                case 天:
+                case wuI:
+                case tian:
                     returnMsg.append("啊这...欧皇!(非提+云玩家の羡慕)");
                     break;
-                case 物II:
+                case wuII:
                     returnMsg.append("0.5%...你也是欧皇!(非提+云玩家の羡慕)");
                     break;
             }
@@ -181,19 +181,19 @@ public class JiangNanRoll extends SuperPlugin {
         for (int i = 0; i < rolls; i++) {
             currPerson = randomResultGenerator.nextPerson();
             switch (currPerson.category) {
-                case 天:
+                case tian:
                     ssr++;
                     break;
-                case 侯:
+                case hou:
                     sr++;
                     break;
-                case 卿:
+                case qing:
                     r++;
                     break;
-                case 物I:
+                case wuI:
                     obj_higher++;
                     break;
-                case 物II:
+                case wuII:
                     obj_lower++;
                     break;
             }
@@ -210,7 +210,7 @@ public class JiangNanRoll extends SuperPlugin {
         }
         returnMsg.append("-----------\n天 总计 ").append(ssr).append("\n侯 总计 ").append(sr)
                 .append("\n卿 总计 ").append(r).append("\n物(0.3%) 总计 ").append(obj_higher)
-                .append("\n物(0.5% 总计) ").append(obj_lower);
+                .append("\n物(0.5%) 总计 ").append(obj_lower);
         returnMsg.append("\n祝欧🍻");
         cq.sendGroupMsg(event.getGroupId(), returnMsg.toString(), false);
         return MESSAGE_BLOCK;
