@@ -8,6 +8,7 @@ spring:
     # 如果前一个功能返回MESSAGE_IGNORE，会继续执行下一个功能
     plugin-list:
       - com.example.demo.plugin.PluginSystemPlugin
+      - com.example.demo.plugin.AntiYuanPlugin
       # - com.example.demo.plugin.AntiSbPlugin
       - com.example.demo.plugin.FlattererPlugin
       - com.example.demo.plugin.LegendsOfThreeKingdomPlugin
@@ -21,6 +22,7 @@ spring:
       - com.example.demo.plugin.TempPrivateMsgPlugin
       - com.example.demo.plugin.AzurLaneRoll
       - com.example.demo.plugin.JiangNanRoll
+      - com.example.demo.plugin.BetaOrbiter
 
       
 

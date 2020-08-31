@@ -31,9 +31,24 @@ public class JiangNanRoll extends SuperPlugin {
             this.name = name;
             this.category = Category.valueOf(category);
         }
+
+        String getCategoryName() {
+            switch (this.category){
+                case hou:
+                    return "侯";
+                case tian:
+                    return "天";
+                case qing:
+                    return "卿";
+                case wuI:
+                case wuII:
+                    return "物";
+            }
+            return "";
+        }
     }
 
-    enum Category {
+    private enum Category {
         tian, hou, qing, wuI, wuII;
 
         static double getPercentage(Category category) {
@@ -156,7 +171,7 @@ public class JiangNanRoll extends SuperPlugin {
 
         if (rolls == 1) {
             currPerson = randomResultGenerator.nextPerson();
-            returnMsg.append("你获得了 ").append(currPerson.category).append(" ").append(currPerson.name);
+            returnMsg.append("你获得了 ").append(currPerson.getCategoryName()).append(" ").append(currPerson.name);
             cq.sendGroupMsg(event.getGroupId(), returnMsg.toString(), false);
             returnMsg = new StringBuilder();
             switch (currPerson.category) {
